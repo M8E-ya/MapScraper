@@ -4,10 +4,12 @@ const Discord = require("discord.js");
 const Trello = require('trello');
 var trello = new Trello(process.env.TKEY_1,process.env.TKEY_2)
 var board = 'bxSa35fP';
+
 module.exports.run = async (bot, message, args) => {
     let lists = await trello.getListsOnBoard(board).then((lists2) =>{
         return lists2;
     })
+    console.log(lists)
     let ts = []
     for(var l in lists){
         ts.push(lists[l]['name'])

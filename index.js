@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fs = require("fs");
-const request = require("request");
+require("dotenv").config();
 var set = false
 
 bot.commands = new Discord.Collection();
@@ -53,7 +53,6 @@ bot.on('ready', () => {
       if(commandfile) commandfile.run(bot)
     }
     async function towns(){
-      let alertchan = bot.channels.get('675909769185198098')
       let commandfile = bot.commands.get('town')
       if(commandfile) commandfile.run('Auto')
     }

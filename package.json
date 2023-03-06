@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "discord.js": "^11.4.2",
+    "dotenv": "^16.0.3",
     "request": "^2.88.0",
     "trello": "^0.10.0"
   }
