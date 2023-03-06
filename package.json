@@ -1,0 +1,14 @@
+{
+  "name": "Test",
+  "description": "Test",
+  "version": "0.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "request": "^2.88.0",
+    "trello": "^0.10.0"
+  }
+}
