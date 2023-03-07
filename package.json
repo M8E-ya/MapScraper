@@ -1,5 +1,5 @@
 {
-  "name": "Test",
+  "name": "mapscraper",
   "description": "Test",
   "version": "0.0.0",
   "main": "index.js",
@@ -10,6 +10,7 @@
     "discord.js": "^11.4.2",
     "dotenv": "^16.0.3",
     "request": "^2.88.0",
+    "striptags": "^3.2.0",
     "trello": "^0.10.0"
   }
 }

@@ -2,31 +2,22 @@
 const request = require("request");
 const Discord = require("discord.js");
 const Trello = require('trello');
-var trello = new Trello(process.env.TKEY_1,process.env.TKEY_2)
-var board = 'bxSa35fP';
+const trello = new Trello(process.env.TKEY_1,process.env.TKEY_2);
+const board = 'bxSa35fP';
+const strip = require('striptags');
 
 module.exports.run = async (bot, message, args) => {
 
-    let lists = await trello.getListsOnBoard(board).then((list) =>{
-        return list;
-    })
-    console.log(lists)
-    let listNames = []
-    for(var l in lists){
-        listNames.push(lists[l]['name'])
-    }
     let page = 0;
     let alertchannel = bot.channels.get('879436584921989121')
     let severity = 'Green'
     let distarr = []
-    let peparr = []
-    let hbs = []
-    let mlts = []
-    let p = 0
-   /* for(var x in lists){
+
+  /*  for(var x in lists){
         p++;
         let cards = await trello.getCardsOnList(lists[x]['id']).then((cards2) => {
-            let coord = cards2[2]['desc']
+            console.log(cards2)
+            let coord = cards2[0]['desc']
             hbs.push(coord)
             if(p === lists.length){
                 return hbs;
@@ -44,22 +35,21 @@ module.exports.run = async (bot, message, args) => {
                 return mlts;
             }
         })
-    }       */   
+    }*/
+
     request("https://map.ccnetmc.com/nationsmap/standalone/dynmap_world.json", (error, response, body) => {
         var z = 0
         const data = JSON.parse(body);
         let arr = data.players
+       // console.log(arr)
         for(var i in arr){
-            let account = arr[i].account
-            let nickname = arr[i].name
-            let x1 = arr[i].x
-            let z1 = arr[i].z
-            for(var z in hbs){
-                let colist = hbs[z].split(' ')
-                let x2 = parseInt(colist[0])
-                let z2 = parseInt(colist[1])
+                let account = arr[i].account
+                let x1 = arr[i].x
+                let z1 = arr[i].z
+                let x2 = parseInt(process.env.XCORD)
+                let z2 = parseInt(process.env.ZCORD)
                 let dist = Math.sqrt((x1-x2) ** 2 + (z1-z2) ** 2)
-                if((dist <= 300) && (!mlts.includes(account))){
+                if((dist <= 300) && (!JSON.parse(process.env.PLAYERS.includes(account)))){
                     let w = 0;
                     dist = Math.round(dist)
                     if (dist <=75 && severity === 'Green'){
@@ -71,8 +61,7 @@ module.exports.run = async (bot, message, args) => {
                     else if (dist <=300 && severity === 'Green'){
                         severity = 'Yellow'
                     }
-                    distarr.push([account,nickname,dist,z])
-                }
+                    distarr.push([account,dist,z])
             }
         }
         if(distarr.length >= 1){
@@ -141,7 +130,6 @@ module.exports.run = async (bot, message, args) => {
                         newEmbed(page, r)
                     });
                     
-                    msg.delete(59*1000)
                 });
             }
         }
