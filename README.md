@@ -1,2 +1,0 @@
-# MapScraper
-pain and agony 

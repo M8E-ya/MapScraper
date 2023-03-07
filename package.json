@@ -1,16 +1,24 @@
 {
   "name": "mapscraper",
-  "description": "Test",
-  "version": "0.0.0",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "mapscraper.js",
   "scripts": {
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/M8E-ya/MapScraper.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/M8E-ya/MapScraper/issues"
+  },
+  "homepage": "https://github.com/M8E-ya/MapScraper#readme",
   "dependencies": {
-    "discord.js": "^11.4.2",
-    "dotenv": "^16.0.3",
-    "request": "^2.88.0",
-    "striptags": "^3.2.0",
-    "trello": "^0.10.0"
+    "ccnetmc": "^1.9.1",
+    "discord.js": "^14.7.1",
+    "dotenv": "^16.0.3"
   }
 }
