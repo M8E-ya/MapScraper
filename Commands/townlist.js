@@ -14,6 +14,8 @@ module.exports.run = async (message, args) => {
             towns: []
         };
 
+        console.log(nationTowns)
+
         nationTowns.forEach(town => {
             let desc = town.desc;
             let name = desc.split('>')[4].split(') ')[1];

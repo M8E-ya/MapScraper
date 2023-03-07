@@ -5,6 +5,7 @@ const fs = require("fs");
 const request = require("request");
 var set = false
 
+require("dotenv").config();
 bot.commands = new Discord.Collection();
 //Command Handler Init
 fs.readdir("./Commands/", (err, files) => {
