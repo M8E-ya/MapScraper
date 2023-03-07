@@ -2,7 +2,7 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const fs = require("fs");
-require("dotenv").config();
+const request = require("request");
 var set = false
 
 bot.commands = new Discord.Collection();
@@ -32,13 +32,15 @@ bot.on('message', message =>{
     let sender = message.author;
     const server = message.guild
     if (sender.bot) return;
-    if (!message.content.startsWith(prefix)) return;    
+    if (!message.content.startsWith(prefix)) return;
     let args = msg.slice(prefix.length).trim().split(" ");
     let cmd = args.shift().toLowerCase();
     var x = 0
     var z = 0
     let color = 0
     let commandfile = bot.commands.get(cmd.slice(prefix));
+    console.log(cmd.slice(prefix))
+    console.log(commandfile)
     if(commandfile) commandfile.run(bot,message,args);
 });
 
@@ -50,6 +52,7 @@ bot.on('ready', () => {
       if(commandfile) commandfile.run(bot)
     }
     async function towns(){
+      let mapscraper = bot.channels.get('1082441131004010647')
       let commandfile = bot.commands.get('town')
       if(commandfile) commandfile.run('Auto')
     }

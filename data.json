@@ -1,0 +1,18 @@
+{
+  "lastUpdate": "2023-03-08T08:52:43.958Z",
+  "towns": [
+    {
+      "name": "Town A",
+      "mayor": "Mayor A",
+      "members": "Member 1\nMember 2\nMember 3",
+      "coords": "-100,200"
+    },
+    {
+      "name": "Town B",
+      "mayor": "Mayor B",
+      "members": "Member 4\nMember 5\nMember 6",
+      "coords": "300,-400"
+    },
+    ...
+  ]
+}
