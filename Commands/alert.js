@@ -6,23 +6,24 @@ var trello = new Trello(process.env.TKEY_1,process.env.TKEY_2)
 var board = 'bxSa35fP';
 
 module.exports.run = async (bot, message, args) => {
-    let lists = await trello.getListsOnBoard(board).then((lists2) =>{
-        return lists2;
+
+    let lists = await trello.getListsOnBoard(board).then((list) =>{
+        return list;
     })
     console.log(lists)
-    let ts = []
+    let listNames = []
     for(var l in lists){
-        ts.push(lists[l]['name'])
+        listNames.push(lists[l]['name'])
     }
     let page = 0;
-    let alertchan = bot.channels.get('675909769185198098')
+    let alertchannel = bot.channels.get('879436584921989121')
     let severity = 'Green'
     let distarr = []
     let peparr = []
     let hbs = []
     let mlts = []
     let p = 0
-    for(var x in lists){
+   /* for(var x in lists){
         p++;
         let cards = await trello.getCardsOnList(lists[x]['id']).then((cards2) => {
             let coord = cards2[2]['desc']
@@ -43,7 +44,7 @@ module.exports.run = async (bot, message, args) => {
                 return mlts;
             }
         })
-    }          
+    }       */   
     request("https://map.ccnetmc.com/nationsmap/standalone/dynmap_world.json", (error, response, body) => {
         var z = 0
         const data = JSON.parse(body);
@@ -76,15 +77,15 @@ module.exports.run = async (bot, message, args) => {
         }
         if(distarr.length >= 1){
             if (severity == 'Red'){
-                alertchan.send(`-=-=-= Severity: Red =-=-=-\n<@&675909681931354139>`)
+                alertchannel.send(`-=-=-= Severity: Red =-=-=-\n<@&675909681931354139>`)
                 send()
             }
             else if(severity == 'Orange'){
-                alertchan.send(`-=-=-= Severity: Orange =-=-=-`)
+                alertchannel.send(`-=-=-= Severity: Orange =-=-=-`)
                 send()
             }
             else if(severity == 'Yellow'){
-                alertchan.send(`-=-=-= Severity: Yellow =-=-=-`)
+                alertchannel.send(`-=-=-= Severity: Yellow =-=-=-`)
                 send()
             }
             //Embed and Other
@@ -117,7 +118,7 @@ module.exports.run = async (bot, message, args) => {
                     .addField('Town:', emtown, true)
                     msg.message.edit({embed: people})
                 }
-                alertchan.send({embed: peoples}).then(async msg => {
+                alertchannel.send({embed: peoples}).then(async msg => {
                     
                     await msg.react("⬅");
                     await msg.react("➡");

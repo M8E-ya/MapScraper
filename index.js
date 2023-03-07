@@ -39,9 +39,6 @@ bot.on('message', message =>{
     var z = 0
     let color = 0
     let commandfile = bot.commands.get(cmd.slice(prefix));
-    console.log(cmd.slice(prefix))
-    console.log(commandfile)
-    message.delete(0000);
     if(commandfile) commandfile.run(bot,message,args);
 });
 
