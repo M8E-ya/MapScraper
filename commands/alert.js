@@ -1,24 +1,28 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const ccnet = require("ccnetmc");
+let interval;
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('alert')
         .setDescription('Sends an embed alert to a specified channel, when someone enters a town.')
-        .addStringOption(option =>
-            option.setName('town')
-                .setDescription('The town to alert for.')
-                .setRequired(true))
-        .addIntegerOption(option =>
-            option.setName('xradius')
-                .setDescription('The x radius to search for players in.')
-                .setRequired(true))
-        .addIntegerOption(option =>
-            option.setName('zradius')
-                .setDescription('The z radius to search for players in.')
-                .setRequired(true)),
-
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('start')
+                .setDescription('Starts an alert for a town.')
+                .addStringOption(option => option.setName('town').setDescription('The town to alert for.').setRequired(true))
+                .addIntegerOption(option => option.setName('xradius').setDescription('The x radius to search for players in.').setRequired(true))
+                .addIntegerOption(option => option.setName('zradius').setDescription('The z radius to search for players in.').setRequired(true)))
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('stop')
+                .setDescription('Stops an alert for all towns.')),
     async execute(interaction) {
+
+        if (interaction.options.getSubcommand() === 'stop') {
+            clearInterval(interval);
+            return interaction.reply('Alert stopped!');
+        }
 
         const alertEmbed = new EmbedBuilder()
         
@@ -34,15 +38,12 @@ module.exports = {
 
         let requiredNation = town.nation
 
-        const residents = JSON.stringify(town.residents);
         const x = town.x;
         const z = town.z;
 
-        setInterval(async function() {
+       interval = setInterval(async function() {
 
         const nearbyPlayers = await ccnet.getNearbyPlayers(x, z, xradius, zradius).then(players => { return players });
-
-        const nonResidents = nearbyPlayers.filter(player => !residents.includes(player.name));
 
         let modifiedPlayerData = nearbyPlayers.filter((item) => { return item.nation.toLowerCase() !== requiredNation.toLowerCase() })
 
@@ -52,7 +53,7 @@ module.exports = {
         var newPlayerData = modifiedPlayerData.map((item, index) => {
           return { ...item, distance: playerDistancesdata[index] };
         });
-        console.log(playerDistancesdata, newPlayerData);
+        //console.log(playerDistancesdata, newPlayerData);
 
         let distance = Math.min( ...playerDistancesdata)
 
@@ -82,9 +83,8 @@ module.exports = {
         .setColor(alertcolor)
     }
 
-       console.log(alertcolor,alertlevel)
+       //console.log(alertcolor,alertlevel)
         await interaction.editReply({ embeds: [alertEmbed] });
-       // alertEmbed.setDescription(null).setColor(null).setTitle(null);
     }, 15000);
 
     }
